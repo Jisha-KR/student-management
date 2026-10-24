@@ -127,4 +127,5 @@ class CourseListView(APIView):
         course.delete()
         return Response("Deleted ", status=status.HTTP_204_NO_CONTENT)
 
-    
+
+
