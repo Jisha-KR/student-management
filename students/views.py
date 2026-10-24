@@ -122,6 +122,7 @@ class CourseListView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self,request,pk):
+        #course = self.get_object(pk)
         course = self.get_object(pk)
         course.delete()
         return Response("Deleted ", status=status.HTTP_204_NO_CONTENT)
