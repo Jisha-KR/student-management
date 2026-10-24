@@ -124,6 +124,6 @@ class CourseListView(APIView):
     def delete(self,request,pk):
         course = self.get_object(pk)
         course.delete()
-        return Response("Deleted successfully", status=status.HTTP_204_NO_CONTENT)
+        return Response("Deleted ", status=status.HTTP_204_NO_CONTENT)
 
     
