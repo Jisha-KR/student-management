@@ -120,7 +120,7 @@ class CourseListView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-# delete function
+
     def delete(self,request,pk):
         #course = self.get_object(pk)
         course = self.get_object(pk)
