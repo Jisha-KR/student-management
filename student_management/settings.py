@@ -125,11 +125,11 @@ MEDIA_ROOT =os.path.join(BASE_DIR,'media')
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
 
-MAILERS = {
-    'default': {
-        'BACKEND': 'django.core.mail.backends.console.EmailBackend',
-    },
-}
+# MAILERS = {
+#     'default': {
+#         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
+#     },
+# }
 
 
 REST_FRAMEWORK = {
@@ -145,3 +145,11 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes =5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1)
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'jishakrjobs@gmail.com'          # Your real Gmail address
+EMAIL_HOST_PASSWORD = 'efzmfarbhyeomrpo'               # The 16-character App Password you just generated
+DEFAULT_FROM_EMAIL = 'jishakrjobs@gmail.com'

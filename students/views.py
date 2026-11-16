@@ -1,6 +1,8 @@
+from django.core.mail import send_mail
 from django.db.models import Q
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from student_management import settings
 from students.serializers import StudentSerializer,CourseSerializer
 from . models import Student,Course
 from rest_framework import status 
@@ -47,13 +49,39 @@ class StudentListCreate(APIView):
         if search:
             students = students.filter(Q(name__icontains = search) | Q(email__icontains = search))
         serializer = StudentSerializer(students,many = True)
-        return Response (serializer.data)
+        return Response(serializer.data)
 
 
     def post(self,request):
+        #student = Student.objects.all()
         serializer = StudentSerializer(data = request.data)
         if serializer.is_valid():
             serializer.save()
+            student = serializer.save()
+            
+            subject = f"Registration Confirmed: Welcome to {student.course.name}!"
+            message = (
+            f"Hi {student.name},\n\n"
+            f"You have been successfully added to the course: {student.course.name}!\n"
+            f"We are thrilled to have you in our class.\n\n"
+            f"Best regards,\n"
+            f"Student Management Team"
+            )
+            sender_email = settings.DEFAULT_FROM_EMAIL
+            recipient_list = [student.email]
+
+            # 3. Send the email via your configured Gmail SMTP server
+            try:
+                send_mail(
+                    subject,
+                    message,
+                    sender_email,
+                    recipient_list,
+                    fail_silently=False,
+                )
+                print(f"📧 Confirmation email successfully sent to {student.email}")
+            except Exception as e:
+                print('Failed to send email')
             return Response (serializer.data,status=status.HTTP_201_CREATED)
         return Response (serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
